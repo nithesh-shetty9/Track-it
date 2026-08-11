@@ -4,7 +4,7 @@ import { Dashboard } from "./pages/mainpages/Dashboard";
 import { Project } from "./pages/mainpages/Projects";
 import { Signup} from "./pages/ui/Signup";
 import {Login} from "./pages/ui/Login"
-import { Landingpage } from "./pages/ui/Landingpage";
+import { Landingpage } from "./pages/ui/Landingpage/Landingpage";
 import { Home } from "./pages/mainpages/Home";
 
 const App=()=>{
