@@ -11,7 +11,7 @@
   margin: 24px auto;
   padding: 28px 24px;
   border-radius: 20px;
-  background-color: white;
+  background-color:white;
   border: 1px solid rgb(196, 196, 228);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   display: flex;
@@ -29,7 +29,7 @@
   font-size: 1.6rem;
   letter-spacing: -0.5px;
   font-weight: 600;
-  color:rgb(36, 110, 207);
+  color:rgb(60, 184, 12);
 }
 
 .close-button {
@@ -98,7 +98,7 @@
   width: 100%;
   margin-top: 18px;
   padding: 12px;
-  background-color: rgb(16, 183, 212);
+  background-color:rgb(60, 184, 12);
   border-radius: 10px;
   color: white;
   font-size: 1rem;
@@ -110,7 +110,7 @@
 
 .user-submit-button:hover,
 .user-card-container button[type="submit"]:hover {
-  background-color: rgb(4, 172, 46);
+  background-color: rgb(13, 124, 41);
   transform: translateY(-1px);
 }
 
