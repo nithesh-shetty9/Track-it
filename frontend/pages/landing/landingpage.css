@@ -1,0 +1,18 @@
+.landingpage{
+    margin-left:20px;
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.landing-menu{
+    font-weight:500;
+}
+.modal-overlay {
+  position: fixed;
+   inset: 0; /*takes the entire screen width */
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}

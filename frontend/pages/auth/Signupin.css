@@ -1,0 +1,193 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.user-card-container {
+  width: 92%;
+  max-width: 420px;
+  margin: 24px auto;
+  padding: 28px 24px;
+  border-radius: 20px;
+  background-color: white;
+  border: 1px solid rgb(196, 196, 228);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+}
+
+.user-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.user-card-header h1 {
+  font-size: 1.6rem;
+  letter-spacing: -0.5px;
+  font-weight: 600;
+  color:rgb(36, 110, 207);
+}
+
+.close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f1f5f9;
+  color: red;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.close-button:hover {
+  background-color: #fee2e2;
+  color: #ef4444;
+  transform: scale(1.08);
+}
+
+.user-input-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+}
+
+.user-input-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color:rgb(58, 26, 59);
+}
+
+.user-input-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  outline: none;
+  color: black;
+  border: 1px solid rgb(71, 15, 97);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-input-field input::placeholder {
+  color: #94a3b8;
+}
+
+.user-input-field input:focus {
+  border-color: rgb(16, 183, 212);
+  box-shadow: 0 0 0 3px rgba(16, 183, 212, 0.25);
+}
+
+.user-submit-button,
+.user-card-container button[type="submit"] {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  background-color: rgb(16, 183, 212);
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+}
+
+.user-submit-button:hover,
+.user-card-container button[type="submit"]:hover {
+  background-color: rgb(4, 172, 46);
+  transform: translateY(-1px);
+}
+
+.user-submit-button:active,
+.user-card-container button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+.login-popup-condition {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.login-popup-condition .check-box {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.login-popup-condition p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #475569;
+}
+
+.login-signup-toggle {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgb(253, 6, 6);
+}
+
+.login-signup-toggle-link {
+  margin-left: 6px;
+  color: rgb(13, 29, 177);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+}
+.password-invalid{
+    color:rgb(167, 20, 10);
+}
+.login-signup-toggle-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .user-card-container {
+    width: 95%;
+    padding: 22px 16px;
+    margin: 16px auto;
+  }
+
+  .user-card-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .user-input-fields {
+    gap: 12px;
+  }
+
+  .user-input-field input {
+    padding: 9px 10px;
+    font-size: 0.9rem;
+  }
+
+  .user-submit-button,
+  .user-card-container button[type="submit"] {
+    padding: 11px;
+    font-size: 0.95rem;
+  }
+
+  .login-popup-condition p {
+    font-size: 0.75rem;
+  }
+}
