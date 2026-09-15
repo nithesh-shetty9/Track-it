@@ -2,9 +2,12 @@ const express=require("express");
 const app=express();
 const cors = require("cors");
 const port=8001;
+const cookieParser = require("cookie-parser");
 const connectDB=require("./config/ConnectDB");
+app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173"
+  origin: "http://localhost:5173",
+  credentials: true
 }));
 const userrouter=require("./routes/user.route.js");
 app.use(express.json());
