@@ -4,6 +4,8 @@ import { AppLayout } from "../layouts/Applayout";
 import Home from "../pages/app/Home/Home";
 import Dashboard from "../pages/app/Dashboard/Dashboard";
 import Projects from "../pages/app/Projects/Projects";
+import ProtectedRoute from "../security/protectedroute";
+import ErrorPage from "../error/error";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -11,7 +13,10 @@ const App = () => {
       path: "/",
       element: <Landingpage />,
     },
-    {
+     {
+      element: <ProtectedRoute/>,
+      children: [
+        {
       element: <AppLayout />,
       children: [
         {
@@ -27,7 +32,12 @@ const App = () => {
           element: <Projects />,
         },
       ],
-    },
+    }
+  ]},
+  {
+    path:"*",
+    element:<ErrorPage/>
+  }
   ]);
   return (
   <RouterProvider router={router}></RouterProvider>
