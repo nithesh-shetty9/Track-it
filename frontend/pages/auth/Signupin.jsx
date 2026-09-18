@@ -31,7 +31,8 @@ const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) =>
         {
           email: user.email,
           password: user.password,
-        }
+        },
+        { withCredentials: true }
       );
       if(response.status===200)
       {
@@ -40,7 +41,8 @@ const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) =>
     } else {
       const response = await axios.post(
         "http://localhost:8001/user/signup",
-        user
+        user,
+        { withCredentials: true }
       );
        if(response.status===201)
       {

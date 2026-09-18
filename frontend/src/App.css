@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+:root {
+  --app-ink: #17211d;
+  --app-muted: #708078;
+  --app-faint: #9aa8a0;
+  --app-line: #e4ebe6;
+  --app-bg: #f6f8f6;
+  --app-card: #ffffff;
+  --app-green: #14845b;
+  --app-green-dark: #0f6044;
+  --app-green-soft: #e7f4ee;
+  --app-amber: #c78325;
+  --app-amber-soft: #fff3df;
+  --app-blue: #3e78b7;
+  --app-blue-soft: #eaf2fb;
+  --app-violet: #7b65b1;
+  --app-violet-soft: #f0ecfa;
+  --app-red: #ba5d5b;
+  --app-red-soft: #fbeceb;
+  --app-shadow: 0 10px 28px rgba(32, 59, 46, 0.06);
+  --app-radius: 14px;
+  --app-sidebar: 248px;
+}
+
+.app-shell {
+  min-height: 100vh;
+  color: var(--app-ink);
+  background: var(--app-bg);
+  font-family: "DM Sans", sans-serif;
+}
+
+.app-main {
+  min-height: 100vh;
+  margin-left: var(--app-sidebar);
+  transition: margin-left 0.24s ease;
+}
+
+.sidebar-collapsed .app-main { margin-left: 76px; }
+
+.app-content {
+  max-width: 1680px;
+  padding: 32px 40px 56px;
+  margin: 0 auto;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  color: var(--app-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.icon-button:hover {
+  color: var(--app-green);
+  background: var(--app-green-soft);
+}
+
+@media (max-width: 1100px) {
+  .app-content { padding: 28px 24px 48px; }
+}
+
+@media (max-width: 760px) {
+  .app-main,
+  .sidebar-collapsed .app-main { margin-left: 0; }
+  .app-content { padding: 24px 16px 40px; }
+}

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
 
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
 
-        fetch("http://localhost:8000/user/me", {
+        fetch("http://localhost:8001/user/me", {
             credentials: "include"
         })
         .then((res) => {
@@ -30,10 +30,10 @@ const ProtectedRoute = ({ children }) => {
     }
 
     if (!authenticated) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/" replace />;
     }
 
-    return children;
+    return <Outlet />;
 };
 
 export default ProtectedRoute;

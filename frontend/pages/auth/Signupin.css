@@ -2,7 +2,9 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, sans-serif;
 }
 
 .user-card-container {
@@ -11,7 +13,7 @@
   margin: 24px auto;
   padding: 28px 24px;
   border-radius: 20px;
-  background-color:whitesmoke;
+  background-color: whitesmoke;
   border: 1px solid rgb(196, 196, 228);
   box-shadow: 0 4px 20px rgba(4, 49, 85, 0.12);
   display: flex;
@@ -29,7 +31,7 @@
   font-size: 1.6rem;
   letter-spacing: -0.5px;
   font-weight: 600;
-  color:rgb(60, 184, 12);
+  color: rgb(60, 184, 12);
 }
 
 .close-button {
@@ -70,7 +72,7 @@
   gap: 6px;
   font-size: 0.9rem;
   font-weight: 600;
-  color:rgba(231, 65, 24, 0.658);
+  color: rgba(231, 65, 24, 0.658);
 }
 
 .user-input-field input {
@@ -81,7 +83,9 @@
   color: black;
   border: 1px solid rgb(71, 15, 97);
   font-size: 0.95rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .user-input-field input::placeholder {
@@ -98,14 +102,16 @@
   width: 100%;
   margin-top: 18px;
   padding: 12px;
-  background-color:rgb(60, 184, 12);
+  background-color: rgb(60, 184, 12);
   border-radius: 10px;
   color: white;
   font-size: 1rem;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.15s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.15s ease;
 }
 
 .user-submit-button:hover,
@@ -154,8 +160,8 @@
   cursor: pointer;
   display: inline-block;
 }
-.password-invalid{
-    color:rgb(167, 20, 10);
+.password-invalid {
+  color: rgb(167, 20, 10);
 }
 .login-signup-toggle-link:hover {
   text-decoration: underline;

@@ -31,36 +31,87 @@ const Landingpage = () => {
   const [activeFaq, setActiveFaq] = useState(null);
 
   const [previewTasks, setPreviewTasks] = useState([
-    { id: 1, text: "Design landing page", completed: true, tag: "high", tagText: "High" },
-    { id: 2, text: "Build authentication API", completed: true, tag: "medium", tagText: "Medium" },
-    { id: 3, text: "Create project dashboard", completed: false, tag: "medium", tagText: "Medium" },
-    { id: 4, text: "Test and deploy", completed: false, tag: "low", tagText: "Low" },
+    {
+      id: 1,
+      text: "Design landing page",
+      completed: true,
+      tag: "high",
+      tagText: "High",
+    },
+    {
+      id: 2,
+      text: "Build authentication API",
+      completed: true,
+      tag: "medium",
+      tagText: "Medium",
+    },
+    {
+      id: 3,
+      text: "Create project dashboard",
+      completed: false,
+      tag: "medium",
+      tagText: "Medium",
+    },
+    {
+      id: 4,
+      text: "Test and deploy",
+      completed: false,
+      tag: "low",
+      tagText: "Low",
+    },
   ]);
 
   const [showcaseTasks, setShowcaseTasks] = useState([
-    { id: 1, text: "Design UI components", due: "Mar 10", tag: "high", completed: true },
-    { id: 2, text: "Build backend API", due: "Mar 12", tag: "medium", completed: true },
-    { id: 3, text: "Integrate frontend & backend", due: "Mar 15", tag: "medium", completed: false },
-    { id: 4, text: "Testing and deployment", due: "Mar 18", tag: "low", completed: false },
+    {
+      id: 1,
+      text: "Design UI components",
+      due: "Mar 10",
+      tag: "high",
+      completed: true,
+    },
+    {
+      id: 2,
+      text: "Build backend API",
+      due: "Mar 12",
+      tag: "medium",
+      completed: true,
+    },
+    {
+      id: 3,
+      text: "Integrate frontend & backend",
+      due: "Mar 15",
+      tag: "medium",
+      completed: false,
+    },
+    {
+      id: 4,
+      text: "Testing and deployment",
+      due: "Mar 18",
+      tag: "low",
+      completed: false,
+    },
   ]);
 
   const togglePreviewTask = (id) => {
     setPreviewTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
     );
   };
 
   const toggleShowcaseTask = (id) => {
     setShowcaseTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
     );
   };
 
   const completedCount = previewTasks.filter((t) => t.completed).length;
-  const progressPercent = Math.round((completedCount / previewTasks.length) * 100);
+  const progressPercent = Math.round(
+    (completedCount / previewTasks.length) * 100,
+  );
   const radius = 38;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (circumference * progressPercent) / 100;
+  const strokeDashoffset =
+    circumference - (circumference * progressPercent) / 100;
 
   const faqs = [
     {
@@ -209,10 +260,18 @@ const Landingpage = () => {
 
           <div className="hero-social">
             <div className="avatars">
-              <span className="avatar" style={{ background: "#3b82f6" }}>AL</span>
-              <span className="avatar" style={{ background: "#10b981" }}>NK</span>
-              <span className="avatar" style={{ background: "#8b5cf6" }}>SR</span>
-              <span className="avatar" style={{ background: "#f59e0b" }}>TA</span>
+              <span className="avatar" style={{ background: "#3b82f6" }}>
+                AL
+              </span>
+              <span className="avatar" style={{ background: "#10b981" }}>
+                NK
+              </span>
+              <span className="avatar" style={{ background: "#8b5cf6" }}>
+                SR
+              </span>
+              <span className="avatar" style={{ background: "#f59e0b" }}>
+                TA
+              </span>
             </div>
             <div className="hero-social-info">
               <div className="rating-stars">
@@ -249,7 +308,9 @@ const Landingpage = () => {
               </div>
               <div className="sidebar-upgrade-card">
                 <p>Collaborating with 5+ peers?</p>
-                <button onClick={() => setShowSignup(true)}>Upgrade Team</button>
+                <button onClick={() => setShowSignup(true)}>
+                  Upgrade Team
+                </button>
               </div>
             </div>
 
@@ -306,7 +367,9 @@ const Landingpage = () => {
                           {task.completed && <FiCheck />}
                         </span>
                         <span className="task-text">{task.text}</span>
-                        <span className={`tag ${task.tag}`}>{task.tagText}</span>
+                        <span className={`tag ${task.tag}`}>
+                          {task.tagText}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -372,7 +435,8 @@ const Landingpage = () => {
         <p className="eyebrow">Key Capabilities</p>
         <h2>Everything you need to deliver results</h2>
         <p className="section-sub">
-          Intuitive controls engineered to keep you focused on building, not busywork.
+          Intuitive controls engineered to keep you focused on building, not
+          busywork.
         </p>
 
         <div className="feature-cards">
@@ -382,7 +446,8 @@ const Landingpage = () => {
             </div>
             <h3>Personal Task Board</h3>
             <p>
-              Organize daily to-dos with drag-and-drop clarity, priority tags, and clean checklists.
+              Organize daily to-dos with drag-and-drop clarity, priority tags,
+              and clean checklists.
             </p>
           </div>
 
@@ -392,7 +457,8 @@ const Landingpage = () => {
             </div>
             <h3>Team Project Spaces</h3>
             <p>
-              Create dedicated workspaces for student clubs, hackathons, or startup sprints with custom permissions.
+              Create dedicated workspaces for student clubs, hackathons, or
+              startup sprints with custom permissions.
             </p>
           </div>
 
@@ -402,7 +468,8 @@ const Landingpage = () => {
             </div>
             <h3>Live Progress Analytics</h3>
             <p>
-              Instantly see who is blocked and celebrate completed milestones with visual progress rings.
+              Instantly see who is blocked and celebrate completed milestones
+              with visual progress rings.
             </p>
           </div>
 
@@ -412,7 +479,8 @@ const Landingpage = () => {
             </div>
             <h3>Smart Reminders</h3>
             <p>
-              Never miss a sprint deadline with automatic notifications and milestone countdown timers.
+              Never miss a sprint deadline with automatic notifications and
+              milestone countdown timers.
             </p>
           </div>
 
@@ -422,7 +490,8 @@ const Landingpage = () => {
             </div>
             <h3>Secure Collaboration</h3>
             <p>
-              Encrypted end-to-end cloud storage ensures your team notes and project documents stay private.
+              Encrypted end-to-end cloud storage ensures your team notes and
+              project documents stay private.
             </p>
           </div>
 
@@ -432,7 +501,8 @@ const Landingpage = () => {
             </div>
             <h3>Lightweight & Fast</h3>
             <p>
-              Built for speed. Zero loading latency with instant offline synchronization and optimistic UI updates.
+              Built for speed. Zero loading latency with instant offline
+              synchronization and optimistic UI updates.
             </p>
           </div>
         </div>
@@ -442,7 +512,8 @@ const Landingpage = () => {
         <p className="eyebrow">Simple Workflow</p>
         <h2>Get set up in four easy steps</h2>
         <p className="section-sub">
-          Transition from chaotic group chats to a structured, repeatable workspace in minutes.
+          Transition from chaotic group chats to a structured, repeatable
+          workspace in minutes.
         </p>
 
         <div className="steps">
@@ -452,7 +523,9 @@ const Landingpage = () => {
               <FiFilePlus />
             </div>
             <h4>Create Workspace</h4>
-            <p>Spin up a project board with templates tailored for your goal.</p>
+            <p>
+              Spin up a project board with templates tailored for your goal.
+            </p>
           </div>
 
           <FiArrowRight className="step-arrow" />
@@ -474,7 +547,10 @@ const Landingpage = () => {
               <FiUserPlus />
             </div>
             <h4>Invite Peers</h4>
-            <p>Share a quick invite link to collaborate with teammates in real time.</p>
+            <p>
+              Share a quick invite link to collaborate with teammates in real
+              time.
+            </p>
           </div>
 
           <FiArrowRight className="step-arrow" />
@@ -485,7 +561,9 @@ const Landingpage = () => {
               <FiTrendingUp />
             </div>
             <h4>Track & Ship</h4>
-            <p>Monitor completion percentages and hit every deadline together.</p>
+            <p>
+              Monitor completion percentages and hit every deadline together.
+            </p>
           </div>
         </div>
       </section>
@@ -499,7 +577,9 @@ const Landingpage = () => {
             </div>
             <span className="progress-pill">
               {Math.round(
-                (showcaseTasks.filter((t) => t.completed).length / showcaseTasks.length) * 100
+                (showcaseTasks.filter((t) => t.completed).length /
+                  showcaseTasks.length) *
+                  100,
               )}
               % Complete
             </span>
@@ -553,7 +633,12 @@ const Landingpage = () => {
             <ul className="showcase-members-list">
               <li className="member-item">
                 <div className="member-info">
-                  <div className="member-avatar" style={{ background: "#2563eb" }}>NK</div>
+                  <div
+                    className="member-avatar"
+                    style={{ background: "#2563eb" }}
+                  >
+                    NK
+                  </div>
                   <div>
                     <div className="member-name">Nithesh Kumar</div>
                     <div className="member-role">Fullstack Lead</div>
@@ -563,7 +648,12 @@ const Landingpage = () => {
               </li>
               <li className="member-item">
                 <div className="member-info">
-                  <div className="member-avatar" style={{ background: "#16a34a" }}>AL</div>
+                  <div
+                    className="member-avatar"
+                    style={{ background: "#16a34a" }}
+                  >
+                    AL
+                  </div>
                   <div>
                     <div className="member-name">Aarav L.</div>
                     <div className="member-role">UI/UX Designer</div>
@@ -573,7 +663,12 @@ const Landingpage = () => {
               </li>
               <li className="member-item">
                 <div className="member-info">
-                  <div className="member-avatar" style={{ background: "#9333ea" }}>SR</div>
+                  <div
+                    className="member-avatar"
+                    style={{ background: "#9333ea" }}
+                  >
+                    SR
+                  </div>
                   <div>
                     <div className="member-name">Sneha Roy</div>
                     <div className="member-role">Backend Engineer</div>
@@ -621,8 +716,9 @@ const Landingpage = () => {
           <p className="eyebrow">A Better Way to Work</p>
           <h2>Stay organized, reduce stress, ship on time.</h2>
           <p>
-            Whether it is an academic term paper, college hackathon project, or your personal fitness
-            routine, TrackIt brings all your scattered ideas into one synchronized workspace.
+            Whether it is an academic term paper, college hackathon project, or
+            your personal fitness routine, TrackIt brings all your scattered
+            ideas into one synchronized workspace.
           </p>
 
           <ul className="checklist">
@@ -685,14 +781,20 @@ const Landingpage = () => {
       <section className="cta">
         <h2>Ready to hit your milestones faster?</h2>
         <p>
-          Join thousands of students and builders who use TrackIt every day to manage their work and
-          ship their goals.
+          Join thousands of students and builders who use TrackIt every day to
+          manage their work and ship their goals.
         </p>
         <div className="cta-buttons">
-          <button className="btn-cta-primary" onClick={() => setShowSignup(true)}>
+          <button
+            className="btn-cta-primary"
+            onClick={() => setShowSignup(true)}
+          >
             Get Started Free <FiArrowRight />
           </button>
-          <button className="btn-cta-secondary" onClick={() => setShowLogin(true)}>
+          <button
+            className="btn-cta-secondary"
+            onClick={() => setShowLogin(true)}
+          >
             Existing User? Log In
           </button>
         </div>
@@ -713,8 +815,8 @@ const Landingpage = () => {
               TrackIt
             </a>
             <p>
-              The lightweight project tracker built to help students and agile teams turn ambitions
-              into reality.
+              The lightweight project tracker built to help students and agile
+              teams turn ambitions into reality.
             </p>
           </div>
 
@@ -774,7 +876,9 @@ const Landingpage = () => {
         </div>
 
         <div className="footer-bottom">
-          <p className="footer-copy">© 2026 TrackIt Technologies Inc. All rights reserved.</p>
+          <p className="footer-copy">
+            © 2026 TrackIt Technologies Inc. All rights reserved.
+          </p>
           <div className="footer-badges">
             <span>Student Friendly</span>
             <span>·</span>
