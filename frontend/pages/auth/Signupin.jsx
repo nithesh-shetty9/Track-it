@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./Signupin.css";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/features/user.js";
 const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) => 
   { 
     const [error,seterror]=useState("");
@@ -13,6 +15,7 @@ const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) =>
       password:"",
     })
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleform=(async(event)=>{
       event.preventDefault();
       if(user.password.length<6)
@@ -36,6 +39,7 @@ const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) =>
       );
       if(response.status===200)
       {
+        dispatch(setUser(response.data.user));
          navigate("/home");
       }
     } else {
@@ -46,6 +50,7 @@ const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) =>
       );
        if(response.status===201)
       {
+        dispatch(setUser(response.data.user));
          navigate("/home");
       }
       console.log(response.data);
