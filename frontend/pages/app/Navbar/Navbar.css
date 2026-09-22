@@ -35,39 +35,15 @@
   color: var(--app-ink);
   white-space: nowrap;
 }
-.brand-mark {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  width: 20px;
-  height: 20px;
-  padding: 3px;
-  background: var(--app-green-soft);
-  border: 1px solid #cce6d8;
-  border-radius: 6px;
-}
-.brand-mark span {
-  display: block;
-  width: 3px;
-  background: var(--app-green);
-  border-radius: 2px;
-}
-.brand-mark span:nth-child(1) {
-  height: 6px;
-  opacity: 0.6;
-}
-.brand-mark span:nth-child(2) {
-  height: 10px;
-  opacity: 0.8;
-}
-.brand-mark span:nth-child(3) {
-  height: 14px;
+.brand-logo{
+  color:#0cdf95;
 }
 .brand-name {
   font-family: "Space Grotesk", sans-serif;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
+  color:#4bf8bc
 }
 .brand-name span {
   color: var(--app-green);
