@@ -1,26 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { GrInProgress } from "react-icons/gr";
 import {
   FiBell,
-  FiChevronDown,
   FiCommand,
-  FiLogOut,
   FiMenu,
+  FiMoon,
   FiPlus,
   FiSearch,
-  FiSettings,
-  FiUser,
+  FiSun,
   FiX,
 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import "./Navbar.css";
 
-const profileMenuItems = [
-  { label: "Profile", icon: FiUser },
-  { label: "Settings", icon: FiSettings },
-];
-
-const Navbar = ({ onMenuClick }) => {
+const Navbar = ({ onMenuClick, theme = "light", onThemeToggle }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const profileRef = useRef(null);
@@ -39,14 +31,6 @@ const Navbar = ({ onMenuClick }) => {
   return (
     <header className="topbar">
       <div className="topbar-start">
-        <div className="brand-lockup" aria-label="TrackIt">
-          <GrInProgress className="brand-logo" />
-          <span className="brand-name">
-            Track<span>It</span>
-          </span>
-        </div>
-
-        <div className="topbar-divider brand-divider" aria-hidden="true" />
         <button
           className="topbar-icon-button menu-button"
           type="button"
@@ -85,6 +69,16 @@ const Navbar = ({ onMenuClick }) => {
           <FiPlus aria-hidden="true" />
           <span>Quick add</span>
         </button>
+        <button
+          className="topbar-icon-button theme-toggle-button"
+          type="button"
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          aria-pressed={theme === "dark"}
+          onClick={onThemeToggle}
+        >
+          {theme === "dark" ? <FiMoon aria-hidden="true" /> : <FiSun aria-hidden="true" />}
+        </button>
         {/* addding projects */}
 
         <button
@@ -97,45 +91,6 @@ const Navbar = ({ onMenuClick }) => {
           {/* notifaction */}
         </button>
 
-        <div className="topbar-divider action-divider" aria-hidden="true" />
-
-        <div className="profile-wrap" ref={profileRef}>
-          <button
-            className={`profile-trigger ${profileOpen ? "is-active" : ""}`}
-            type="button"
-            aria-expanded={profileOpen}
-            aria-haspopup="menu"
-            onClick={() => setProfileOpen((isOpen) => !isOpen)}
-          >
-            <span className="avatar">{userName[0].toUpperCase()}</span>
-            <span className="profile-name">{userName}</span>
-            <FiChevronDown className="profile-chevron" />
-          </button>
-          {profileOpen && (
-            <div className="profile-menu" role="menu">
-                  <div className="profile-summary">
-                <span className="avatar avatar-large">
-                  {userName[0].toUpperCase()}
-                </span>
-                <span>
-                  <strong>{userName}</strong>
-                  <small>{User?.email || ""}</small>
-                </span>
-              </div>
-              <div className="menu-divider" />
-              {profileMenuItems.map(({ label, icon: Icon }) => (
-                <button key={label} type="button" role="menuitem">
-                  <Icon /> {label}
-                </button>
-              ))}
-              <div className="menu-divider" />
-              <button className="logout-item" type="button" role="menuitem">
-                <FiLogOut />
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
       </div>
     </header>
   );

@@ -28,6 +28,21 @@
   color: var(--app-ink);
   background: var(--app-bg);
   font-family: "DM Sans", sans-serif;
+  color-scheme: light;
+}
+
+.app-shell[data-theme="dark"] {
+  --app-ink: #e4ece7;
+  --app-muted: #a4b4aa;
+  --app-faint: #87988d;
+  --app-line: #34433a;
+  --app-bg: #141b16;
+  --app-card: #202a24;
+  --app-green: #36a875;
+  --app-green-dark: #70c698;
+  --app-green-soft: #24392d;
+  --app-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+  color-scheme: dark;
 }
 
 .app-main {

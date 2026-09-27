@@ -6,6 +6,7 @@ import Dashboard from "../pages/app/Dashboard/Dashboard";
 import Projects from "../pages/app/Projects/Projects";
 import ProtectedRoute from "../security/protectedroute";
 import ErrorPage from "../error/error";
+import Setting from "../pages/app/Settings/Setting";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const App = () => {
           path: "/projects",
           element: <Projects />,
         },
+        {
+          path:"/settings",
+          element:<Setting/>
+        }
       ],
     }
   ]},
