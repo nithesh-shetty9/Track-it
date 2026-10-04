@@ -8,104 +8,52 @@ import {
   FiFolder,
   FiHome,
   FiLogOut,
-  FiMoreHorizontal,
   FiPlus,
   FiSettings,
-  FiStar,
   FiUser,
   FiX,
 } from "react-icons/fi";
 import { GrInProgress } from "react-icons/gr";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../store/features/user.js";
+import { openOverlay } from "../../../store/features/ui.js";
+import { useLogout } from "../../../hooks/useLogout.js";
+import { initials } from "../../../utils/format.js";
 import "./Sidebar.css";
 
-const projectColors = [
-  "#14845b",
-  "#d17b50",
-  "#597db5",
-  "#b2923c",
-  "#8668a9",
-  "#398f98",
-];
 const navItems = [
   ["Home", "/home", FiHome],
-  ["My Tasks", "/dashboard", FiCheckSquare],
+  ["My Tasks", "/tasks", FiCheckSquare],
+  ["Projects", "/projects", FiFolder],
 ];
-const initials = (name) =>
-  name
-    .split(/\s+/)
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
 
-const Avatar = ({ user, name, large = false }) => {
-  const source = user?.avatarUrl || user?.avatar || user?.profilePicture;
-  const className = `sidebar-avatar${large ? " sidebar-avatar-large" : ""}`;
-  return source ? (
-    <img className={className} src={source} alt="" />
-  ) : (
-    <span className={className}>{initials(name)}</span>
-  );
-};
+const Avatar = ({ name, large = false }) => (
+  <span className={`sidebar-avatar${large ? " sidebar-avatar-large" : ""}`}>{initials(name)}</span>
+);
 
-const Sidebar = ({
-  isOpen = false,
-  onClose,
-  isCollapsed = false,
-  onToggleCollapse,
-  workspace,
-  projects = [],
-  favoriteProjects = [],
-  taskCounts,
-  activeRoute,
-  onCreateProject,
-  onProjectSelect,
-  onProjectMenu,
-  onProfile,
-  onSettings,
-  onKeyboardShortcuts,
-  onLogout,
-  onWorkspaceSelect,
-}) => {
+const Sidebar = ({ isOpen = false, onClose, isCollapsed = false, onToggleCollapse }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector((state) => state.auth.user);
+  const projects = useSelector((state) => state.workspace.projects);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
-  const currentRoute = activeRoute || location.pathname;
-  const workspaceName = workspace?.name || "Personal Workspace";
-  const userName = user?.name || user?.username || user?.fullName;
-  const myTaskCount =
-    typeof taskCounts === "number" ? taskCounts : taskCounts?.myTasks;
-  const favoriteIds = new Set(
-    favoriteProjects.map((project) =>
-      typeof project === "string" ? project : project?.id || project?._id,
-    ),
-  );
-  const favorites = projects.filter(
-    (project) =>
-      project.isFavorite ||
-      favoriteIds.has(project.id) ||
-      favoriteIds.has(project._id),
-  );
-  const Nav=useNavigate();
-  const handlelogout=async()=>{
-    try
-    {
-      await fetch("http://localhost:8001/user/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    dispatch(logout());
-    }
-    catch (error) {
-      console.log("logout error");
-    }
-    Nav("/");
-    }
+  const currentRoute = location.pathname;
+  const workspaceName = "Personal Workspace";
+  const userName = user?.name;
+  const handlelogout = useLogout();
+  const onCreateProject = () => {
+    onClose?.();
+    dispatch(openOverlay("project"));
+  };
+  const onProjectSelect = (project) => {
+    onClose?.();
+    navigate(`/projects/${project._id}`);
+  };
+  const onProfile = () => navigate("/profile");
+  const onSettings = () => navigate("/settings");
+  const onKeyboardShortcuts = () => dispatch(openOverlay("shortcuts"));
   useEffect(() => {
     const handleEvent = (event) => {
       if (event.key === "Escape") {
@@ -126,10 +74,7 @@ const Sidebar = ({
     };
   }, [onClose]);
 
-  const isActive = (key, path) =>
-    currentRoute === key ||
-    currentRoute === path ||
-    (key === "projects" && currentRoute.startsWith("/projects/"));
+  const isActive = (path) => currentRoute === path;
 
   return (
     <>
@@ -179,13 +124,7 @@ const Sidebar = ({
           </button>
         </div>
 
-        <button
-          className="workspace-switcher"
-          type="button"
-          title={workspaceName}
-          aria-label={`Workspace: ${workspaceName}`}
-          onClick={onWorkspaceSelect}
-        >
+        <div className="workspace-switcher" title={workspaceName}>
           <span className="workspace-monogram" aria-hidden="true">
             {workspaceName.slice(0, 1).toUpperCase()}
           </span>
@@ -193,17 +132,13 @@ const Sidebar = ({
             <span className="workspace-eyebrow">Workspace</span>
             <span className="workspace-name">{workspaceName}</span>
           </span>
-          <FiChevronDown className="workspace-chevron" aria-hidden="true" />
-        </button>
+        </div>
 
         <div className="sidebar-scroll-area">
           <nav className="sidebar-navigation" aria-label="Primary">
-            <p className="sidebar-section-label">Home</p>
+            <p className="sidebar-section-label">Workspace</p>
             {navItems.map(([label, to, Icon]) => {
-              const active = isActive(
-                label === "My Tasks" ? "my-tasks" : label.toLowerCase(),
-                to,
-              );
+              const active = isActive(to);
               return (
                 <Link
                   key={to}
@@ -215,9 +150,6 @@ const Sidebar = ({
                 >
                   <Icon className="sidebar-nav-icon" aria-hidden="true" />
                   <span className="sidebar-nav-label">{label}</span>
-                  {label === "My Tasks" && myTaskCount != null && (
-                    <span className="task-count">{myTaskCount}</span>
-                  )}
                 </Link>
               );
             })}
@@ -244,45 +176,28 @@ const Sidebar = ({
 
             {projects.length ? (
               <div className="sidebar-project-list" aria-label="Projects">
-                {projects.map((project, index) => {
-                  const id = project.id || project._id;
-                  const name = project.name || "";
-                  const active =
-                    currentRoute === id || currentRoute.endsWith(`/${id}`);
+                {projects.map((project) => {
+                  const name = project.name;
+                  const active = currentRoute === `/projects/${project._id}`;
                   return (
                     <div
                       className={`sidebar-project-row ${active ? "is-active" : ""}`}
-                      key={id || name || index}
+                      key={project._id}
                     >
                       <button
                         className="sidebar-project-link"
                         type="button"
                         title={name}
                         aria-current={active ? "page" : undefined}
-                        onClick={() => onProjectSelect?.(project)}
+                        onClick={() => onProjectSelect(project)}
                       >
                         <span
                           className="project-color-dot"
-                          style={{
-                            "--project-color":
-                              project.color ||
-                              projectColors[index % projectColors.length],
-                          }}
+                          style={{ "--project-color": project.color }}
                           aria-hidden="true"
                         />
                         <span className="sidebar-project-name">{name}</span>
                       </button>
-                      {onProjectMenu && (
-                        <button
-                          className="project-menu-button"
-                          type="button"
-                          title={`More options for ${name}`}
-                          aria-label={`More options for ${name}`}
-                          onClick={() => onProjectMenu(project)}
-                        >
-                          <FiMoreHorizontal aria-hidden="true" />
-                        </button>
-                      )}
                     </div>
                   );
                 })}
@@ -307,30 +222,6 @@ const Sidebar = ({
             )}
           </section>
 
-          {favorites.length > 0 && (
-            <section
-              className="sidebar-favorites-section"
-              aria-labelledby="favorites-heading"
-            >
-              <h2 className="sidebar-section-label" id="favorites-heading">
-                Favorites
-              </h2>
-              <div className="sidebar-project-list">
-                {favorites.map((project, index) => (
-                  <button
-                    className="sidebar-favorite-link"
-                    key={project.id || project._id || index}
-                    type="button"
-                    title={project.name || ""}
-                    onClick={() => onProjectSelect?.(project)}
-                  >
-                    <FiStar className="favorite-icon" aria-hidden="true" />
-                    <span className="sidebar-project-name">{project.name}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
-          )}
         </div>
 
         <div className="sidebar-footer">
@@ -349,7 +240,7 @@ const Sidebar = ({
             {profileOpen && userName && (
               <div className="sidebar-user-menu" role="menu">
                 <div className="sidebar-menu-profile">
-                  <Avatar user={user} name={userName} large />
+                  <Avatar name={userName} large />
                   <span className="sidebar-menu-user-copy">
                     <strong>{userName}</strong>
                     {user?.email && <small>{user.email}</small>}
@@ -374,12 +265,11 @@ const Sidebar = ({
                   </button>
                 ))}
                 <div className="sidebar-menu-divider" />
-                <div className="sidebar-menu-divider" />
                 <button
                   className="sidebar-logout-item"
                   type="button"
                   role="menuitem"
-                  onClick={() => handlelogout()}
+                  onClick={handlelogout}
                 >
                   <FiLogOut aria-hidden="true" /> Logout
                 </button>
@@ -398,7 +288,7 @@ const Sidebar = ({
             >
               {userName ? (
                 <>
-                  <Avatar user={user} name={userName} />
+                  <Avatar name={userName} />
                   <span className="sidebar-user-copy">
                     <span className="sidebar-user-name">{userName}</span>
                     {user?.email && (
