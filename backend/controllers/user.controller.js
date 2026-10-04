@@ -1,12 +1,14 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model.js");
 const { setUser, cookieOptions } = require("../services/user.service");
+const { need } = require("../utils/http");
 
 // Never send the password hash (or any other field) back to the client.
 const toSafeUser = (user) => ({
   _id: user._id,
   name: user.name,
   email: user.email,
+  notificationsEnabled: user.notificationsEnabled !== false,
 });
 
 const handlesignup = async (req, res) => {
@@ -74,4 +76,32 @@ const handlelogin = async (req, res) => {
   }
 };
 
-module.exports = { handlesignup, handlelogin };
+const handleme = (req, res) => res.json({ user: toSafeUser(req.user) });
+
+const handleupdate = async (req, res) => {
+  const { name, email, notificationsEnabled } = req.body;
+  if (name !== undefined) {
+    need(String(name).trim(), 400, "Name is required");
+    req.user.name = String(name).trim();
+  }
+  if (email !== undefined) {
+    const normalized = String(email).toLowerCase().trim();
+    need(normalized, 400, "Email is required");
+    need(!(await User.exists({ email: normalized, _id: { $ne: req.user._id } })), 409, "Email already registered");
+    req.user.email = normalized;
+  }
+  if (typeof notificationsEnabled === "boolean") req.user.notificationsEnabled = notificationsEnabled;
+  await req.user.save();
+  res.json({ user: toSafeUser(req.user) });
+};
+
+const handlepassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  need(String(newPassword || "").length >= 6, 400, "Password must have at least 6 characters");
+  need(await bcrypt.compare(String(currentPassword || ""), req.user.password), 401, "Current password is incorrect");
+  req.user.password = await bcrypt.hash(String(newPassword), 10);
+  await req.user.save();
+  res.json({ message: "Password updated" });
+};
+
+module.exports = { handlesignup, handlelogin, handleme, handleupdate, handlepassword };

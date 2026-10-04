@@ -1,0 +1,7 @@
+.project-head .btn {
+  width: fit-content;
+}
+
+.project-head .menu .btn {
+  display: inline-flex;
+}

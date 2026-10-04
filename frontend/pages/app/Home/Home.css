@@ -1,0 +1,36 @@
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.stat {
+  display: grid;
+  gap: 4px;
+}
+
+.stat svg {
+  color: var(--app-green);
+  font-size: 20px;
+}
+
+.stat strong {
+  font-size: 30px;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.chip-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--app-card);
+  border: 1px solid var(--app-line);
+  color: var(--app-muted);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
