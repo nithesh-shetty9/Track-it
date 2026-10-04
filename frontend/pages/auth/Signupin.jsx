@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import "./Signupin.css";
-import axios from "axios";
+import api, { errorMessage } from "../../api/index.js";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/features/user.js";
@@ -27,48 +27,15 @@ const Signupin = ({ showLogin, setShowLogin, showSignup, setShowSignup }) =>
       {
         setvalid(false);
       }
-     try {
-    if (showLogin) {
-      const response = await axios.post(
-        "http://localhost:8001/user/login",
-        {
-          email: user.email,
-          password: user.password,
-        },
-        { withCredentials: true }
-      );
-      if(response.status===200)
-      {
-        dispatch(setUser(response.data.user));
-         navigate("/home");
-      }
-    } else {
-      const response = await axios.post(
-        "http://localhost:8001/user/signup",
-        user,
-        { withCredentials: true }
-      );
-       if(response.status===201)
-      {
-        dispatch(setUser(response.data.user));
-         navigate("/home");
-      }
-      console.log(response.data);
+    try {
+      const result = showLogin
+        ? await api.login({ email: user.email, password: user.password })
+        : await api.signup(user);
+      dispatch(setUser(result.user));
+      navigate("/home");
+    } catch (failure) {
+      seterror(errorMessage(failure));
     }
-  }
-   catch (error) {
-  if (error.response?.status === 404) {
-    seterror("User not found");
-  }
-
-  if (error.response?.status === 401) {
-    seterror("Invalid password");
-  }
-
-  if (error.response?.status === 409) {
-    seterror("Email already exists");
-  }
-}
   })
   return (
       <form className="user-card-container" onSubmit={handleform}>

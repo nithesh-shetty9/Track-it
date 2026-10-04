@@ -1,39 +1,19 @@
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router";
+import { Skeleton } from "../components/Common";
 
 const ProtectedRoute = () => {
+  const { user, ready } = useSelector((state) => state.auth);
 
-    const [loading, setLoading] = useState(true);
-    const [authenticated, setAuthenticated] = useState(false);
+  if (!ready) {
+    return (
+      <div className="boot">
+        <Skeleton rows={3} />
+      </div>
+    );
+  }
 
-    useEffect(() => {
-
-        fetch("http://localhost:8001/user/me", {
-            credentials: "include"
-        })
-        .then((res) => {
-
-            if (res.ok) {
-                setAuthenticated(true);
-            }
-
-            setLoading(false);
-        })
-        .catch(() => {
-            setLoading(false);
-        });
-
-    }, []);
-
-    if (loading) {
-        return <h2>Loading...</h2>;
-    }
-
-    if (!authenticated) {
-        return <Navigate to="/" replace />;
-    }
-
-    return <Outlet />;
+  return user ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default ProtectedRoute;
