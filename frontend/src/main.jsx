@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
+//refresh logic evn when refereshed it checks auth through cookies 
 export const AuthBootstrap = ({ children }) => {
   const dispatch = useDispatch();
 
