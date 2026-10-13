@@ -13,6 +13,14 @@ const taskSchema = new mongoose.Schema(
     createdBy: { type: ObjectId, ref: "User", required: true },
     dueDate: { type: Date, default: null },
     completedAt: { type: Date, default: null },
+    progress: { type: Number, min: 0, max: 100, default: 0 },
+    progressNotes: [
+      {
+        author: { type: ObjectId, ref: "User", required: true },
+        content: { type: String, required: true, trim: true, maxlength: 1000 },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

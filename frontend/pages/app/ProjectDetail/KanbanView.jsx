@@ -4,7 +4,7 @@ import { openTask } from "../../../store/features/ui";
 import { Avatar, Badge, Select } from "../../../components/Common";
 import { fmtDate, isOverdue, STATUSES } from "../../../utils/format";
 
-const KanbanView = ({ project, tasks }) => {
+const KanbanView = ({ project, tasks, canManage, me }) => {
   const dispatch = useDispatch();
   const [over, setOver] = useState(null);
   const locked = project.isArchived;
@@ -14,7 +14,7 @@ const KanbanView = ({ project, tasks }) => {
     setOver(null);
     const id = event.dataTransfer.getData("text/plain");
     const task = tasks.tasks.find((item) => item._id === id);
-    if (task && task.status !== status && !locked) tasks.patch(id, { status });
+    if (task && task.status !== status && !locked && (canManage || task.assignee?._id === me?._id)) tasks.patch(id, { status });
   };
 
   return (
@@ -38,7 +38,7 @@ const KanbanView = ({ project, tasks }) => {
             </h3>
             {items.length === 0 && <p className="muted small">No tasks</p>}
             {items.map((task) => (
-              <article key={task._id} className="card kcard" draggable={!locked} onDragStart={(event) => event.dataTransfer.setData("text/plain", task._id)}>
+              <article key={task._id} className="card kcard" draggable={!locked && (canManage || task.assignee?._id === me?._id)} onDragStart={(event) => event.dataTransfer.setData("text/plain", task._id)}>
                 <button className="link-btn" onClick={() => dispatch(openTask(task._id))}>
                   {task.title}
                 </button>
@@ -51,7 +51,7 @@ const KanbanView = ({ project, tasks }) => {
                     {task.assignee ? <Avatar name={task.assignee.name} size={22} /> : null}
                     {task.assignee ? task.assignee.name : "Unassigned"}
                   </span>
-                  <Select label="Move to" value={task.status} options={STATUSES} disabled={locked} onChange={(next) => tasks.patch(task._id, { status: next })} />
+                  <Select label="Move to" value={task.status} options={STATUSES} disabled={locked || (!canManage && task.assignee?._id !== me?._id)} onChange={(next) => tasks.patch(task._id, { status: next })} />
                 </div>
                 <span className="muted small">by {task.createdBy?.name}</span>
               </article>

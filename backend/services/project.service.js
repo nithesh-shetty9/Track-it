@@ -6,6 +6,7 @@ const TASK_POPULATE = [
   { path: "assignee", select: "name email" },
   { path: "createdBy", select: "name email" },
   { path: "project", select: "name color type isArchived" },
+  { path: "progressNotes.author", select: "name email" },
 ];
 
 const projectIdsFor = async (userId, archived = false) => {

@@ -4,7 +4,7 @@ const { need, pick } = require("../utils/http");
 const { TASK_POPULATE, myTasksFilter, touchProject } = require("../services/project.service");
 const { notify } = require("../services/notification.service");
 
-const FIELDS = ["title", "description", "status", "priority", "assignee", "dueDate"];
+const FIELDS = ["title", "description", "status", "priority", "assignee", "dueDate", "progress"];
 const RANK = { HIGH: 0, MEDIUM: 1, LOW: 2 };
 const SORT_KEYS = {
   dueDate: (t) => (t.dueDate ? +t.dueDate : Infinity),
@@ -48,6 +48,7 @@ const create = async (req, res) => {
   if (project) {
     const membership = await access(req.user._id, project);
     writable(membership);
+    need(["OWNER", "ADMIN"].includes(membership.role), 403, "Only Owners and Admins can create project tasks");
     assignee = await resolveAssignee(membership, req.body.assignee, req.user._id);
   }
   const task = await Task.create({
@@ -56,6 +57,7 @@ const create = async (req, res) => {
     assignee,
     createdBy: req.user._id,
     completedAt: data.status === "DONE" ? new Date() : null,
+    progress: data.status === "DONE" ? 100 : data.status === "IN_PROGRESS" ? 1 : 0,
   });
   await touchProject(project);
   if (assignee && String(assignee) !== String(req.user._id)) {
@@ -110,16 +112,22 @@ const update = async (req, res) => {
   const uid = String(req.user._id);
   if (membership) {
     writable(membership);
-    need(
-      membership.role !== "MEMBER" || String(task.createdBy) === uid || String(task.assignee) === uid,
-      403,
-      "You do not have permission to edit this task"
-    );
+    if (membership.role === "MEMBER") {
+      need(String(task.assignee || "") === uid, 403, "Only the assigned member can update task progress");
+      need(Object.keys(req.body).every((key) => ["progress", "status"].includes(key)), 403, "Members can only update progress and status");
+    }
   }
-  const data = pick(req.body, FIELDS);
+  const data = membership?.role === "MEMBER" ? pick(req.body, ["progress", "status"]) : pick(req.body, FIELDS);
   if ("title" in data) need(data.title && String(data.title).trim(), 400, "Task title is required");
   if (!membership) delete data.assignee;
   if ("assignee" in data) data.assignee = await resolveAssignee(membership, data.assignee, req.user._id);
+  if ("progress" in data) {
+    data.progress = Number(data.progress);
+    need(Number.isInteger(data.progress) && data.progress >= 0 && data.progress <= 100, 400, "Progress must be a whole number from 0 to 100");
+    data.status = data.progress === 100 ? "DONE" : data.progress === 0 ? "TODO" : "IN_PROGRESS";
+  } else if (data.status) {
+    data.progress = data.status === "DONE" ? 100 : data.status === "TODO" ? 0 : Math.max(1, task.progress || 1);
+  }
   const becameDone = data.status === "DONE" && task.status !== "DONE";
   if (data.status && data.status !== task.status) data.completedAt = data.status === "DONE" ? new Date() : null;
   const previousAssignee = String(task.assignee || "");
@@ -148,4 +156,17 @@ const remove = async (req, res) => {
   res.json({ message: "Task deleted" });
 };
 
-module.exports = { create, list, get, update, remove };
+const addProgressNote = async (req, res) => {
+  const { task, membership } = await load(req);
+  need(membership, 403, "Progress notes are only available for project tasks");
+  writable(membership);
+  need(membership.role !== "MEMBER" || String(task.assignee || "") === String(req.user._id), 403, "Only the assigned member can add progress notes");
+  const content = String(req.body.content || "").trim();
+  need(content && content.length <= 1000, 400, "Note must contain 1 to 1000 characters");
+  task.progressNotes.push({ author: req.user._id, content });
+  await task.save();
+  await task.populate(TASK_POPULATE);
+  res.status(201).json({ note: task.progressNotes[task.progressNotes.length - 1], task });
+};
+
+module.exports = { create, list, get, update, addProgressNote, remove };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router";
-import { FiArchive, FiArrowLeft, FiEdit2, FiKey, FiMoreHorizontal, FiRotateCcw } from "react-icons/fi";
+import { FiArchive, FiArrowLeft, FiEdit2, FiKey, FiMessageCircle, FiMoreHorizontal, FiRotateCcw } from "react-icons/fi";
 import api, { errorMessage } from "../../../api/index";
 import { useResource } from "../../../hooks/useResource";
 import { useTasks } from "../../../hooks/useTasks";
@@ -11,6 +11,7 @@ import { openOverlay, toast } from "../../../store/features/ui";
 import { AvatarStack, ErrorState, Progress, Skeleton } from "../../../components/Common";
 import { CopyCode } from "../../../components/ProjectDrawers";
 import { fmtDate } from "../../../utils/format";
+import ChatSidebar from "../../../components/ChatSidebar";
 import ListView from "./ListView";
 import KanbanView from "./KanbanView";
 import TimelineView from "./TimelineView";
@@ -32,6 +33,7 @@ const ProjectDetail = () => {
   const [ask, dialog] = useConfirm();
   const [view, setView] = useState("list");
   const [code, setCode] = useState(null);
+  const [chatOpen, setChatOpen] = useState(false);
   const project = useResource(() => api.projects.get(id), id);
   const people = useResource(() => api.projects.members(id), id);
   const tasks = useTasks({ project: id });
@@ -87,6 +89,7 @@ const ProjectDetail = () => {
               <p className="muted">{info.description || "No description"}</p>
             </div>
           </div>
+          <button className="btn" onClick={() => setChatOpen(true)} aria-label="Open team chat"><FiMessageCircle /> Team chat</button>
           <details className="menu">
             <summary className="btn" aria-label="Project actions">
               <FiMoreHorizontal /> Actions
@@ -161,6 +164,7 @@ const ProjectDetail = () => {
         <TeamView {...shared} ask={ask} act={act} onLeave={() => navigate("/projects")} />
       )}
       {dialog}
+      <ChatSidebar project={info} open={chatOpen} onClose={() => setChatOpen(false)} />
     </div>
   );
 };
