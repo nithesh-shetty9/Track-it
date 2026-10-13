@@ -19,7 +19,7 @@ const KEYS = {
   updatedAt: (t) => +new Date(t.updatedAt),
 };
 
-const ListView = ({ project, tasks, members, onCreate, ask }) => {
+const ListView = ({ project, tasks, members, onCreate, ask, canManage, me }) => {
   const [filters, setFilters] = useState({ status: "", priority: "", assignee: "" });
   const [sort, setSort] = useState("dueDate");
   const [title, setTitle] = useState("");
@@ -46,7 +46,7 @@ const ListView = ({ project, tasks, members, onCreate, ask }) => {
 
   return (
     <div className="stack">
-      {!locked && (
+      {!locked && canManage && (
         <form className="row add-row" onSubmit={submit}>
           <input className="input grow" aria-label="New task title" placeholder="Add a task and press Enter" value={title} onChange={(event) => setTitle(event.target.value)} />
           <button className="btn primary" disabled={!title.trim()}>
@@ -73,7 +73,7 @@ const ListView = ({ project, tasks, members, onCreate, ask }) => {
           text={tasks.tasks.length ? "Try clearing your filters." : "Add the first task to this project."}
         />
       ) : (
-        <TaskTable tasks={visible} members={locked ? undefined : members} showProject={false} onPatch={tasks.patch} onRemove={remove} />
+        <TaskTable tasks={visible} members={locked ? undefined : members} showProject={false} canManage={canManage && !locked} me={me} onPatch={tasks.patch} onRemove={remove} />
       )}
     </div>
   );

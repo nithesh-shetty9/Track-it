@@ -4,7 +4,7 @@ import { openTask } from "../store/features/ui";
 import { Avatar, Select } from "./Common";
 import { fmtDate, fromInput, isOverdue, PRIORITIES, STATUSES, toInput } from "../utils/format";
 
-const TaskTable = ({ tasks, onPatch, onRemove, members, showProject = true }) => {
+const TaskTable = ({ tasks, onPatch, onRemove, members, showProject = true, canManage = true, me }) => {
   const dispatch = useDispatch();
   return (
     <div className="table-wrap">
@@ -29,6 +29,7 @@ const TaskTable = ({ tasks, onPatch, onRemove, members, showProject = true }) =>
                     type="checkbox"
                     aria-label={`Mark ${task.title} complete`}
                     checked={task.status === "DONE"}
+                    disabled={!canManage && task.assignee?._id !== me?._id}
                     onChange={(event) => onPatch(task._id, { status: event.target.checked ? "DONE" : "TODO" })}
                   />
                   <button className="link-btn" onClick={() => dispatch(openTask(task._id))}>
@@ -42,16 +43,17 @@ const TaskTable = ({ tasks, onPatch, onRemove, members, showProject = true }) =>
                 </div>
               </td>
               <td>
-                <Select label="Status" value={task.status} options={STATUSES} onChange={(status) => onPatch(task._id, { status })} />
+                <Select label="Status" value={task.status} options={STATUSES} disabled={!canManage && task.assignee?._id !== me?._id} onChange={(status) => onPatch(task._id, { status })} />
               </td>
               <td>
-                <Select label="Priority" value={task.priority} options={PRIORITIES} onChange={(priority) => onPatch(task._id, { priority })} />
+                <Select label="Priority" value={task.priority} options={PRIORITIES} disabled={!canManage} onChange={(priority) => onPatch(task._id, { priority })} />
               </td>
               <td>
                 {members ? (
                   <Select
                     label="Assignee"
                     value={task.assignee?._id || ""}
+                    disabled={!canManage}
                     options={[["", "Unassigned"], ...members.map((m) => [m.user._id, m.user.name])]}
                     onChange={(assignee) => onPatch(task._id, { assignee: assignee || null })}
                   />
@@ -65,6 +67,7 @@ const TaskTable = ({ tasks, onPatch, onRemove, members, showProject = true }) =>
                 <input
                   type="date"
                   className={`date ${isOverdue(task) ? "overdue" : ""}`}
+                  disabled={!canManage}
                   aria-label="Due date"
                   value={toInput(task.dueDate)}
                   onChange={(event) => onPatch(task._id, { dueDate: fromInput(event.target.value) })}
@@ -72,7 +75,7 @@ const TaskTable = ({ tasks, onPatch, onRemove, members, showProject = true }) =>
               </td>
               <td className="muted">{task.createdBy?.name}</td>
               <td>
-                <button className="icon-btn" aria-label={`Delete ${task.title}`} title={`Created ${fmtDate(task.createdAt)}`} onClick={() => onRemove(task)}>
+                <button className="icon-btn" aria-label={`Delete ${task.title}`} title={`Created ${fmtDate(task.createdAt)}`} disabled={!canManage} onClick={() => onRemove(task)}>
                   <FiTrash2 />
                 </button>
               </td>

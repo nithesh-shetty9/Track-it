@@ -9,6 +9,7 @@ router.post("/", c.create);
 router.get("/", c.list);
 router.get("/:id", c.get);
 router.patch("/:id", c.update);
+router.post("/:id/progress-notes", c.addProgressNote);
 router.delete("/:id", c.remove);
 
 module.exports = router;

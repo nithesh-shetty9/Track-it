@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", require("./routes/user.route.js"));
+app.use("/projects", require("./routes/chat.route.js"));
 app.use("/projects", require("./routes/project.route.js"));
 app.use("/tasks", require("./routes/task.route.js"));
 app.use("/", require("./routes/workspace.route.js"));

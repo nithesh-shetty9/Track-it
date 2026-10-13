@@ -38,6 +38,13 @@ const api = {
     create: (body) => http.post("/tasks", body).then(data),
     update: (id, body) => http.patch(`/tasks/${id}`, body).then(data),
     remove: (id) => http.delete(`/tasks/${id}`).then(data),
+    addProgressNote: (id, content) => http.post(`/tasks/${id}/progress-notes`, { content }).then(data),
+  },
+  chat: {
+    list: (id, params) => http.get(`/projects/${id}/chat`, { params }).then(data),
+    send: (id, content) => http.post(`/projects/${id}/chat`, { content }).then(data),
+    markRead: (id) => http.patch(`/projects/${id}/chat/read`).then(data),
+    streamUrl: (id) => `${import.meta.env.VITE_API_URL || "http://localhost:8001"}/projects/${id}/chat/stream`,
   },
 };
 
