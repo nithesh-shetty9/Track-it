@@ -1,11 +1,11 @@
 const express = require("express");
 const Isauth = require("../middlewares/auth.middleware");
-const c = require("../controllers/chat.controller");
+const chat_controllers = require("../controllers/chat.controller");
 
 const router = express.Router();
-router.use(Isauth);
-router.get("/:id/chat", c.list);
-router.post("/:id/chat", c.send);
-router.patch("/:id/chat/read", c.markRead);
-router.get("/:id/chat/stream", c.stream);
+router.use(Isauth);//middleware to check before going to next steps
+router.get("/:id/chat", chat_controllers.list);
+router.post("/:id/chat", chat_controllers.send);
+router.patch("/:id/chat/read", chat_controllers.markRead);
+router.get("/:id/chat/stream", chat_controllers.stream);
 module.exports = router;
