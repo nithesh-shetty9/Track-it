@@ -8,7 +8,7 @@ const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days, same as the token
 // Shared cookie options so set/clear always match.
 const cookieOptions = {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     secure: process.env.NODE_ENV === "production",
     maxAge: COOKIE_MAX_AGE,
 };
