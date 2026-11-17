@@ -460,3 +460,16 @@
     width: min(280px, 32vw);
   }
 }
+
+/* Quiet, high-signal command bar */
+.app-shell .topbar { min-height: 72px; padding: 0 48px; background: color-mix(in srgb, var(--app-card) 82%, transparent); border-bottom-color: color-mix(in srgb, var(--app-line) 78%, transparent); }
+.app-shell .topbar-start { gap: 18px; }
+.app-shell .global-search { width: min(380px, 36vw); height: 40px; padding-inline: 12px; border-color: var(--app-line); background: var(--app-surface-soft); border-radius: 12px; }
+.app-shell .global-search:focus-within { width: min(430px, 42vw); background: var(--app-card); border-color: var(--app-green); }
+.app-shell .quick-add { height: 40px; padding-inline: 15px; border-radius: 11px; box-shadow: 0 7px 16px rgba(20, 132, 91, .16); }
+.app-shell .topbar-icon-button { width: 38px; height: 38px; border-radius: 11px; }
+.app-shell .nav-user-trigger { min-height: 40px; padding-inline: 8px; border-radius: 11px; }
+.app-shell .nav-user-trigger:hover { background: var(--app-surface-soft); }
+
+@media (max-width: 1100px) { .app-shell .topbar { padding-inline: 28px; } }
+@media (max-width: 760px) { .app-shell .topbar { min-height: 64px; padding-inline: 16px; } }

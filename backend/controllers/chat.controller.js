@@ -75,13 +75,11 @@ const markRead = async (req, res) => {
 
 const stream = async (req, res) => {
   await access(req.user._id, req.params.id);
-  res
-    .status(200)
-    .set({
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-    });
+  res.status(200).set({
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache",
+    Connection: "keep-alive",
+  });
   res.flushHeaders?.();
   res.write(
     `event: ready\ndata: ${JSON.stringify({ project: req.params.id })}\n\n`,

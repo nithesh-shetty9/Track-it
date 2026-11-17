@@ -4,6 +4,20 @@
   gap: 16px;
 }
 
+.home-intro { display: grid; gap: 9px; }
+.home-intro p { max-width: 560px; font-size: 15px; }
+.home-kicker { display: inline-flex; align-items: center; gap: 7px; color: var(--app-green); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.home-kicker::before { content: ""; width: 20px; height: 2px; border-radius: 99px; background: var(--app-green); }
+.home-pulse { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 24px; overflow: hidden; position: relative; background: linear-gradient(120deg, color-mix(in srgb, var(--app-card) 94%, transparent), color-mix(in srgb, var(--app-green-soft) 62%, var(--app-card))); }
+.home-pulse::after { content: ""; position: absolute; width: 260px; height: 260px; right: -90px; top: -120px; border-radius: 50%; background: color-mix(in srgb, var(--app-green) 10%, transparent); }
+.pulse-copy { display: grid; gap: 9px; align-content: center; position: relative; z-index: 1; }
+.pulse-copy p { max-width: 500px; color: var(--app-muted); line-height: 1.55; }
+.pulse-chart { display: flex; align-items: end; justify-content: space-around; gap: 12px; min-height: 142px; padding: 20px 18px 8px; border: 1px solid color-mix(in srgb, var(--app-green) 15%, var(--app-line)); border-radius: 16px; background: color-mix(in srgb, var(--app-card) 55%, transparent); position: relative; z-index: 1; }
+.pulse-bar { display: grid; justify-items: center; align-items: end; gap: 8px; height: 100%; flex: 1; }
+.pulse-bar span { width: min(34px, 100%); height: var(--bar-height); min-height: 10px; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, var(--app-green), color-mix(in srgb, var(--app-green) 48%, white)); box-shadow: 0 7px 12px color-mix(in srgb, var(--app-green) 18%, transparent); animation: pulse-rise .55s ease both; transform-origin: bottom; }
+.pulse-bar small { color: var(--app-muted); font-size: 10px; font-weight: 700; }
+@keyframes pulse-rise { from { transform: scaleY(0); opacity: .2; } to { transform: scaleY(1); opacity: 1; } }
+
 .stat {
   display: grid;
   gap: 4px;
@@ -33,4 +47,5 @@
 
 @media (max-width: 900px) {
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-pulse { grid-template-columns: 1fr; }
 }
