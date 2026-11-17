@@ -22,7 +22,9 @@ const handlesignup = async (req, res) => {
         .json({ message: "Name, email and password are required" });
     }
 
-    const existing = await User.findOne({ email: String(email).toLowerCase().trim() });
+    const existing = await User.findOne({
+      email: String(email).toLowerCase().trim(),
+    });
     if (existing) {
       return res.status(409).json({ message: "Email already registered" });
     }
@@ -50,13 +52,18 @@ const handlelogin = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
-    const user = await User.findOne({ email: String(email).toLowerCase().trim() });
+    const user = await User.findOne({
+      email: String(email).toLowerCase().trim(),
+    });
 
     // Same message for "no such user" and "wrong password" so emails can't be probed.
-    const valid = user && (await bcrypt.compare(String(password), user.password));
+    const valid =
+      user && (await bcrypt.compare(String(password), user.password));
     if (!valid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -87,21 +94,40 @@ const handleupdate = async (req, res) => {
   if (email !== undefined) {
     const normalized = String(email).toLowerCase().trim();
     need(normalized, 400, "Email is required");
-    need(!(await User.exists({ email: normalized, _id: { $ne: req.user._id } })), 409, "Email already registered");
+    need(
+      !(await User.exists({ email: normalized, _id: { $ne: req.user._id } })),
+      409,
+      "Email already registered",
+    );
     req.user.email = normalized;
   }
-  if (typeof notificationsEnabled === "boolean") req.user.notificationsEnabled = notificationsEnabled;
+  if (typeof notificationsEnabled === "boolean")
+    req.user.notificationsEnabled = notificationsEnabled;
   await req.user.save();
   res.json({ user: toSafeUser(req.user) });
 };
 
 const handlepassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
-  need(String(newPassword || "").length >= 6, 400, "Password must have at least 6 characters");
-  need(await bcrypt.compare(String(currentPassword || ""), req.user.password), 401, "Current password is incorrect");
+  need(
+    String(newPassword || "").length >= 6,
+    400,
+    "Password must have at least 6 characters",
+  );
+  need(
+    await bcrypt.compare(String(currentPassword || ""), req.user.password),
+    401,
+    "Current password is incorrect",
+  );
   req.user.password = await bcrypt.hash(String(newPassword), 10);
   await req.user.save();
   res.json({ message: "Password updated" });
 };
 
-module.exports = { handlesignup, handlelogin, handleme, handleupdate, handlepassword };
+module.exports = {
+  handlesignup,
+  handlelogin,
+  handleme,
+  handleupdate,
+  handlepassword,
+};

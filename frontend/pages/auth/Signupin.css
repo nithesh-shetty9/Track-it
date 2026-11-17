@@ -197,3 +197,15 @@
     font-size: 0.75rem;
   }
 }
+
+/* Auth surface aligned with the product shell */
+.user-card-container { max-width: 440px; padding: 34px; border: 1px solid #dce8df; border-radius: 24px; background: rgba(255, 255, 255, .94); box-shadow: 0 24px 70px rgba(18, 59, 37, .14); backdrop-filter: blur(16px); }
+.user-card-header h1 { color: #173b2a; font-family: "Space Grotesk", -apple-system, sans-serif; font-size: 28px; letter-spacing: -.04em; }
+.close-button { color: #718078; background: #f3f7f4; }
+.user-input-field { color: #5d6f64; font-size: .78rem; letter-spacing: .02em; }
+.user-input-field input { padding: 12px 13px; color: #173b2a; border: 1px solid #d8e3dc; border-radius: 11px; background: #f7faf8; }
+.user-input-field input:focus { border-color: #14845b; box-shadow: 0 0 0 4px rgba(20, 132, 91, .12); background: #fff; }
+.user-submit-button, .user-card-container button[type="submit"] { min-height: 44px; margin-top: 20px; background: linear-gradient(135deg, #1a9a68, #0e6b4a); box-shadow: 0 10px 20px rgba(20, 132, 91, .18); }
+.login-popup-condition p { color: #708078; }
+.login-signup-toggle { color: #708078; }
+.login-signup-toggle-link { color: #14845b; }

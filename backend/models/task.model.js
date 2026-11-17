@@ -7,8 +7,16 @@ const taskSchema = new mongoose.Schema(
     project: { type: ObjectId, ref: "Project", default: null },
     title: { type: String, required: true, trim: true, maxlength: 200 },
     description: { type: String, trim: true, default: "", maxlength: 2000 },
-    status: { type: String, enum: ["TODO", "IN_PROGRESS", "DONE"], default: "TODO" },
-    priority: { type: String, enum: ["LOW", "MEDIUM", "HIGH"], default: "MEDIUM" },
+    status: {
+      type: String,
+      enum: ["TODO", "IN_PROGRESS", "DONE"],
+      default: "TODO",
+    },
+    priority: {
+      type: String,
+      enum: ["LOW", "MEDIUM", "HIGH"],
+      default: "MEDIUM",
+    },
     assignee: { type: ObjectId, ref: "User", default: null },
     createdBy: { type: ObjectId, ref: "User", required: true },
     dueDate: { type: Date, default: null },
@@ -22,7 +30,7 @@ const taskSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 taskSchema.index({ project: 1, status: 1 });

@@ -210,3 +210,45 @@ kbd { padding: 2px 8px; border-radius: 6px; border: 1px solid var(--app-line); b
 @media (prefers-reduced-motion: reduce) {
   .app-shell * { animation: none !important; transition: none !important; }
 }
+
+/* Premium product surface */
+.app-shell .card,
+.app-shell .table-wrap {
+  border-color: color-mix(in srgb, var(--app-line) 78%, transparent);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.app-shell .card { padding: 22px; gap: 16px; }
+.app-shell .card:hover { border-color: var(--app-border-strong); }
+.app-shell .btn { min-height: 40px; padding: 0 15px; border-radius: 11px; font-weight: 600; transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease; }
+.app-shell .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(20, 44, 32, .08); }
+.app-shell .btn.primary { box-shadow: 0 7px 16px rgba(20, 132, 91, .18); }
+.app-shell .btn.primary:hover:not(:disabled) { box-shadow: 0 10px 22px rgba(20, 132, 91, .25); }
+.app-shell .input, .app-shell .select, .app-shell .date, .app-shell .textarea, .app-shell .title-input { min-height: 42px; border-color: var(--app-border-strong); border-radius: 11px; background: var(--app-surface-soft); transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+.app-shell .textarea { min-height: 96px; padding: 11px 12px; }
+.app-shell .input:focus, .app-shell .select:focus, .app-shell .date:focus, .app-shell .textarea:focus { background: var(--app-card); border-color: var(--app-green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--app-green) 14%, transparent); outline: none; }
+.app-shell .field { color: var(--app-muted); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.app-shell .tabs { gap: 8px; border-bottom: 1px solid var(--app-line); }
+.app-shell .tabs button { padding: 11px 13px; border-bottom-width: 2px; font-weight: 600; }
+.app-shell .toolbar { padding: 12px; border: 1px solid var(--app-line); border-radius: 16px; background: color-mix(in srgb, var(--app-card) 86%, transparent); box-shadow: 0 4px 14px rgba(20, 44, 32, .035); }
+.app-shell .table-wrap { overflow: hidden; }
+.app-shell .table th { background: var(--app-surface-soft); padding: 14px 16px; font-size: 10px; letter-spacing: .12em; }
+.app-shell .table td { padding: 14px 16px; }
+.app-shell .table tr { transition: background .16s ease; }
+.app-shell .table tbody tr:hover { background: var(--app-surface-soft); }
+.app-shell .list li { padding: 13px 8px; border-bottom-color: color-mix(in srgb, var(--app-line) 75%, transparent); }
+.app-shell .progress { height: 8px; background: color-mix(in srgb, var(--app-line) 80%, transparent); }
+.app-shell .empty { min-height: 210px; border: 1px dashed var(--app-line); border-radius: 16px; background: var(--app-surface-soft); }
+.app-shell .empty svg { width: 38px; height: 38px; padding: 9px; border-radius: 12px; background: var(--app-green-soft); }
+.app-shell .modal-backdrop { background: rgba(14, 27, 20, .54); backdrop-filter: blur(7px); }
+.app-shell .drawer { width: min(520px, 100%); border-left: 1px solid var(--app-border-strong); box-shadow: -24px 0 60px rgba(13, 34, 23, .18); }
+.app-shell .drawer-head { padding: 22px 24px; background: var(--app-card); }
+.app-shell .drawer-body { padding: 24px; }
+.app-shell .code-box { border: 1px solid color-mix(in srgb, var(--app-green) 25%, transparent); border-radius: 14px; }
+
+@media (max-width: 760px) {
+  .app-shell .card { padding: 18px; border-radius: 16px; }
+  .app-shell .toolbar { padding: 10px; }
+  .app-shell .toolbar > * { flex: 1 1 140px; }
+}

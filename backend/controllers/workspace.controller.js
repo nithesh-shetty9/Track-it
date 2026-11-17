@@ -2,14 +2,22 @@ const Task = require("../models/task.model");
 const Project = require("../models/project.model");
 const ProjectMember = require("../models/projectMember.model");
 const Notification = require("../models/notification.model");
-const { TASK_POPULATE, projectIdsFor, projectsFor, myTasksFilter, decorate } = require("../services/project.service");
+const {
+  TASK_POPULATE,
+  projectIdsFor,
+  projectsFor,
+  myTasksFilter,
+  decorate,
+} = require("../services/project.service");
 
 const summary = async (req, res) => {
   const uid = req.user._id;
   const from = new Date(req.query.from || Date.now());
   const to = new Date(req.query.to || Date.now());
   const [tasks, projectDocs] = await Promise.all([
-    Task.find(await myTasksFilter(uid)).populate(TASK_POPULATE).lean(),
+    Task.find(await myTasksFilter(uid))
+      .populate(TASK_POPULATE)
+      .lean(),
     projectsFor(uid),
   ]);
   const open = tasks.filter((t) => t.status !== "DONE");
@@ -22,9 +30,17 @@ const summary = async (req, res) => {
       projects: projectDocs.length,
     },
     today: tasks
-      .filter((t) => t.dueDate && ((t.dueDate >= from && t.dueDate <= to) || (t.dueDate < from && t.status !== "DONE")))
+      .filter(
+        (t) =>
+          t.dueDate &&
+          ((t.dueDate >= from && t.dueDate <= to) ||
+            (t.dueDate < from && t.status !== "DONE")),
+      )
       .sort(byDue),
-    upcoming: open.filter((t) => t.dueDate).sort(byDue).slice(0, 6),
+    upcoming: open
+      .filter((t) => t.dueDate)
+      .sort(byDue)
+      .slice(0, 6),
     projects: await decorate(projectDocs, uid),
   });
 };
@@ -39,17 +55,31 @@ const search = async (req, res) => {
     Task.find({ $and: [await myTasksFilter(uid, ids), { title: pattern }] })
       .limit(5)
       .populate("project", "name color"),
-    Project.find({ _id: { $in: ids }, name: pattern }).limit(5).select("name color type"),
+    Project.find({ _id: { $in: ids }, name: pattern })
+      .limit(5)
+      .select("name color type"),
     ProjectMember.find({ project: { $in: ids } })
-      .populate({ path: "user", match: { $or: [{ name: pattern }, { email: pattern }] }, select: "name email" })
+      .populate({
+        path: "user",
+        match: { $or: [{ name: pattern }, { email: pattern }] },
+        select: "name email",
+      })
       .populate("project", "name")
       .lean(),
   ]);
   const seen = new Set();
   const members = memberships
-    .filter((m) => m.user && !seen.has(String(m.user._id)) && seen.add(String(m.user._id)))
+    .filter(
+      (m) =>
+        m.user && !seen.has(String(m.user._id)) && seen.add(String(m.user._id)),
+    )
     .slice(0, 5)
-    .map((m) => ({ _id: m.user._id, name: m.user.name, email: m.user.email, project: m.project }));
+    .map((m) => ({
+      _id: m.user._id,
+      name: m.user.name,
+      email: m.user.email,
+      project: m.project,
+    }));
   res.json({ tasks, projects, members });
 };
 
@@ -74,9 +104,9 @@ const notifications = async (req, res) => {
               project: t.project,
             },
           },
-          { upsert: true }
-        )
-      )
+          { upsert: true },
+        ),
+      ),
     );
   }
   const [items, unread] = await Promise.all([

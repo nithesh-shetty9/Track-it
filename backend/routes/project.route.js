@@ -2,9 +2,7 @@ const express = require("express");
 const Isauth = require("../middlewares/auth.middleware");
 const { member, roles, writable } = require("../middlewares/project.middleware");
 const c = require("../controllers/project.controller");
-
 const router = express.Router();
-
 router.use(Isauth);
 router.post("/", c.create);
 router.get("/", c.list);

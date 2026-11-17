@@ -20,13 +20,20 @@
   --app-red-soft: #fbeceb;
   --app-shadow: 0 10px 28px rgba(32, 59, 46, 0.06);
   --app-radius: 14px;
-  --app-sidebar: 248px;
+  --app-sidebar: 256px;
+  --app-border-strong: #d8e3dc;
+  --app-surface-soft: #f7faf8;
+  --app-radius-sm: 10px;
+  --app-radius-lg: 20px;
+  --app-shadow-soft: 0 1px 2px rgba(20, 44, 32, 0.03), 0 14px 34px rgba(20, 44, 32, 0.06);
 }
 
 .app-shell {
   min-height: 100vh;
   color: var(--app-ink);
-  background: var(--app-bg);
+  background:
+    radial-gradient(circle at 80% -10%, rgba(87, 188, 140, 0.10), transparent 28rem),
+    var(--app-bg);
   font-family: "DM Sans", sans-serif;
   color-scheme: light;
 }
@@ -55,8 +62,23 @@
 
 .app-content {
   max-width: 1680px;
-  padding: 32px 40px 56px;
+  padding: 38px 48px 64px;
   margin: 0 auto;
+}
+
+.app-shell h1,
+.app-shell h2,
+.app-shell h3,
+.app-shell strong { letter-spacing: -0.025em; }
+
+.app-shell h1 { font-size: clamp(28px, 3vw, 38px); line-height: 1.05; }
+.app-shell h2 { font-size: 17px; }
+
+.app-shell[data-theme="dark"] {
+  --app-border-strong: #405047;
+  --app-surface-soft: #1c2820;
+  --app-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.18), 0 18px 40px rgba(0, 0, 0, 0.18);
+  background: radial-gradient(circle at 80% -10%, rgba(48, 140, 91, 0.16), transparent 28rem), var(--app-bg);
 }
 
 .icon-button {
@@ -75,7 +97,7 @@
 }
 
 @media (max-width: 1100px) {
-  .app-content { padding: 28px 24px 48px; }
+  .app-content { padding: 30px 28px 52px; }
 }
 
 @media (max-width: 760px) {

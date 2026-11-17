@@ -944,6 +944,31 @@
 	}
 }
 
+/* Refined navigation system */
+.app-shell .sidebar { width: 256px; padding: 24px 16px 16px; background: color-mix(in srgb, var(--app-card) 94%, transparent); border-right-color: var(--app-line); box-shadow: 8px 0 28px rgba(18, 45, 31, .025); }
+.app-shell .sidebar-brand-row { margin-bottom: 28px; padding-inline: 6px; }
+.app-shell .sidebar-brand-mark { width: 34px; height: 34px; flex-basis: 34px; border-radius: 11px; background: linear-gradient(145deg, #24a975, #0e6b4a); box-shadow: 0 7px 16px rgba(20, 132, 91, .22); }
+.app-shell .sidebar-brand-name { font-size: 19px; letter-spacing: -.04em; }
+.app-shell .workspace-switcher { min-height: 62px; margin-bottom: 28px; padding: 10px; background: var(--app-surface-soft); border-color: var(--app-line); border-radius: 13px; }
+.app-shell .workspace-monogram { width: 36px; height: 36px; flex-basis: 36px; border-radius: 10px; background: linear-gradient(135deg, #d7f2e3, #bde7d0); }
+.app-shell .sidebar-section-label { font-size: 10px; letter-spacing: .13em; }
+.app-shell .sidebar-nav-item { min-height: 42px; margin: 3px 0; padding-inline: 12px; border-radius: 11px; font-size: 13px; }
+.app-shell .sidebar-nav-item:hover { transform: translateX(2px); }
+.app-shell .sidebar-nav-item.is-active { box-shadow: inset 3px 0 0 var(--app-green), 0 5px 12px rgba(20, 132, 91, .06); }
+.app-shell .sidebar-project-section { margin-top: 34px; }
+.app-shell .sidebar-project-row { min-height: 38px; border-radius: 10px; }
+.app-shell .sidebar-project-link { min-height: 38px; border-radius: 10px; }
+.app-shell .sidebar-footer { background: transparent; }
+.app-shell .sidebar-user-trigger { min-height: 54px; padding: 7px 9px; border-radius: 12px; }
+.app-shell .sidebar-user-menu { border-radius: 14px; box-shadow: 0 18px 45px rgba(20, 44, 32, .14); }
+.app-shell .sidebar.is-collapsed { width: 76px; }
+
+.app-shell[data-theme="dark"] .sidebar { background: color-mix(in srgb, var(--app-card) 94%, transparent); box-shadow: none; }
+
+@media (max-width: 760px) {
+  .app-shell .sidebar { width: min(88vw, 330px); padding: 20px 16px 16px; }
+}
+
 .app-shell[data-theme="dark"] .sidebar {
 	color: #dce8df;
 	background: #18211b;

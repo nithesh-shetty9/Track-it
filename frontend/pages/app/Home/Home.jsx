@@ -43,7 +43,8 @@ const Home = () => {
   return (
     <div className="stack gap-lg">
       <header className="row between wrap">
-        <div>
+        <div className="home-intro">
+          <span className="home-kicker">Workspace overview</span>
           <h1>
             {greeting()}, {user.name.split(" ")[0]}
           </h1>
@@ -65,6 +66,25 @@ const Home = () => {
           </div>
         ))}
       </div>
+
+      <section className="card home-pulse" aria-label="Workspace pulse">
+        <div className="pulse-copy">
+          <span className="home-kicker">Momentum</span>
+          <h2>Your work at a glance</h2>
+          <p>
+            Keep the important work moving. Your live project progress and task counts are summarized here so you can decide what deserves attention next.
+          </p>
+        </div>
+        <div className="pulse-chart" aria-label="Project progress chart">
+          {projects.slice(0, 5).map((project) => (
+            <div className="pulse-bar" key={project._id} title={`${project.name}: ${project.progress}%`}>
+              <span style={{ "--bar-height": `${Math.max(project.progress, 8)}%` }} />
+              <small>{project.progress}%</small>
+            </div>
+          ))}
+          {projects.length === 0 && <p className="muted small">Create a project to see progress here.</p>}
+        </div>
+      </section>
 
       <div className="grid-2 wide-left">
         <Section
