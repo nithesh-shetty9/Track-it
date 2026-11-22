@@ -11,10 +11,16 @@ import { ago, dayRange, fmtDate, greeting, isOverdue } from "../../../utils/form
 import "./Home.css";
 
 const STAT_CARDS = [
-  ["total", "Total tasks", FiList],
-  ["completed", "Completed", FiCheckCircle],
-  ["inProgress", "In progress", FiClock],
-  ["projects", "Projects", FiFolder],
+  ["total", "Total tasks", FiList, "accent"],
+  ["completed", "Completed", FiCheckCircle, "success"],
+  ["inProgress", "In progress", FiClock, "amber"],
+  ["projects", "Projects", FiFolder, "violet"],
+];
+
+const SPLIT = [
+  ["completed", "Done", "success"],
+  ["inProgress", "In progress", "amber"],
+  ["todo", "To do", "muted"],
 ];
 
 const Section = ({ title, action, children }) => (
@@ -39,6 +45,7 @@ const Home = () => {
 
   const { stats, today, upcoming, projects } = data;
   const pending = today.filter((task) => task.status !== "DONE").length;
+  const todoCount = Math.max(stats.total - stats.completed - stats.inProgress, 0);
 
   return (
     <div className="stack gap-lg">
@@ -49,7 +56,7 @@ const Home = () => {
             {greeting()}, {user.name.split(" ")[0]}
           </h1>
           <p className="muted">
-            {pending ? `You have ${pending} ${pending === 1 ? "task" : "tasks"} that need attention today.` : "You're all caught up for today."}
+            {pending ? `You have ${pending} ${pending === 1 ? "task that needs" : "tasks that need"} attention today.` : "You're all caught up for today."}
           </p>
         </div>
         <span className="chip-date">
@@ -58,9 +65,11 @@ const Home = () => {
       </header>
 
       <div className="grid-4">
-        {STAT_CARDS.map(([key, text, Icon]) => (
-          <div className="card stat" key={key}>
-            <Icon aria-hidden="true" />
+        {STAT_CARDS.map(([key, text, Icon, tone]) => (
+          <div className={`card stat tone-${tone}`} key={key}>
+            <span className="stat-icon">
+              <Icon aria-hidden="true" />
+            </span>
             <strong>{stats[key]}</strong>
             <span className="muted">{text}</span>
           </div>
@@ -72,8 +81,27 @@ const Home = () => {
           <span className="home-kicker">Momentum</span>
           <h2>Your work at a glance</h2>
           <p>
-            Keep the important work moving. Your live project progress and task counts are summarized here so you can decide what deserves attention next.
+            {stats.total === 0
+              ? "Add your first task to see how your work is distributed."
+              : `${Math.round((stats.completed / stats.total) * 100)}% of your tasks are complete.`}
           </p>
+          {stats.total > 0 && (
+            <>
+              <div className="split-bar" role="img" aria-label={`${stats.completed} done, ${stats.inProgress} in progress, ${todoCount} to do`}>
+                {SPLIT.map(([key, , tone]) => {
+                  const count = key === "todo" ? todoCount : stats[key];
+                  return count > 0 && <span key={key} className={`split-${tone}`} style={{ flexGrow: count }} />;
+                })}
+              </div>
+              <ul className="split-legend">
+                {SPLIT.map(([key, text, tone]) => (
+                  <li key={key}>
+                    <i className={`split-${tone}`} /> {text} <strong>{key === "todo" ? todoCount : stats[key]}</strong>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
         <div className="pulse-chart" aria-label="Project progress chart">
           {projects.slice(0, 5).map((project) => (
