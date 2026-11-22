@@ -266,7 +266,7 @@ const Landingpage = () => {
               <span className="avatar" style={{ background: "#10b981" }}>
                 NK
               </span>
-              <span className="avatar" style={{ background: "#8b5cf6" }}>
+              <span className="avatar" style={{ background: "#0ea5e9" }}>
                 SR
               </span>
               <span className="avatar" style={{ background: "#f59e0b" }}>
@@ -665,7 +665,7 @@ const Landingpage = () => {
                 <div className="member-info">
                   <div
                     className="member-avatar"
-                    style={{ background: "#9333ea" }}
+                    style={{ background: "#0891b2" }}
                   >
                     SR
                   </div>
