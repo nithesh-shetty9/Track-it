@@ -18,11 +18,11 @@
   --app-surface-soft: #f9f9fc;
 
   /* Accent */
-  --app-accent: #4f46e5;
-  --app-accent-dark: #4038c9;
-  --app-accent-soft: #eef0ff;
-  --app-accent-ring: rgba(79, 70, 229, 0.18);
-  --app-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 55%, #7c3aed 100%);
+  --app-accent: #2563eb;
+  --app-accent-dark: #1d4ed8;
+  --app-accent-soft: #eaf2ff;
+  --app-accent-ring: rgba(37, 99, 235, 0.18);
+  --app-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 55%, #1d4ed8 100%);
 
   /* Semantic */
   --app-success: #139a62;
@@ -31,8 +31,8 @@
   --app-amber-soft: #fff3dc;
   --app-blue: #2f6fdb;
   --app-blue-soft: #e8f0fd;
-  --app-violet: #7a4fd6;
-  --app-violet-soft: #f1eafd;
+  --app-violet: #0e8a9a;
+  --app-violet-soft: #e1f5f7;
   --app-red: #d0392f;
   --app-red-soft: #fdeceb;
 
@@ -61,7 +61,7 @@
   font-size: 14px;
   line-height: 1.5;
   background:
-    radial-gradient(60rem 28rem at 85% -10%, rgba(99, 102, 241, 0.09), transparent 60%),
+    radial-gradient(60rem 28rem at 85% -10%, rgba(59, 130, 246, 0.09), transparent 60%),
     var(--app-bg);
   color-scheme: light;
   -webkit-font-smoothing: antialiased;
@@ -77,11 +77,11 @@
   --app-card: #15161d;
   --app-surface-soft: #1a1b24;
 
-  --app-accent: #8b8ff8;
-  --app-accent-dark: #a5a8fb;
-  --app-accent-soft: #23244a;
-  --app-accent-ring: rgba(139, 143, 248, 0.25);
-  --app-gradient: linear-gradient(135deg, #7c7ff5 0%, #6366f1 55%, #8b5cf6 100%);
+  --app-accent: #6ea8ff;
+  --app-accent-dark: #93bbff;
+  --app-accent-soft: #15294f;
+  --app-accent-ring: rgba(110, 168, 255, 0.25);
+  --app-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 55%, #1d4ed8 100%);
 
   --app-success: #3ec88b;
   --app-success-soft: #14301f;
@@ -89,8 +89,8 @@
   --app-amber-soft: #38290f;
   --app-blue: #7aa7f0;
   --app-blue-soft: #1a2a45;
-  --app-violet: #b18cf5;
-  --app-violet-soft: #2c2347;
+  --app-violet: #4fd1de;
+  --app-violet-soft: #10343a;
   --app-red: #f0746b;
   --app-red-soft: #3b1f1f;
 
@@ -100,7 +100,7 @@
   --app-shadow-pop: 0 16px 40px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
   color-scheme: dark;
   background:
-    radial-gradient(60rem 28rem at 85% -10%, rgba(99, 102, 241, 0.16), transparent 60%),
+    radial-gradient(60rem 28rem at 85% -10%, rgba(59, 130, 246, 0.16), transparent 60%),
     var(--app-bg);
 }
 

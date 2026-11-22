@@ -53,8 +53,8 @@
 }
 .btn:hover:not(:disabled) { border-color: var(--app-accent); box-shadow: var(--app-shadow); transform: translateY(-1px); }
 .btn:active:not(:disabled) { transform: translateY(0) scale(0.98); box-shadow: none; }
-.btn.primary { color: #fff; border-color: transparent; background: var(--app-gradient); box-shadow: 0 1px 2px rgba(79, 70, 229, 0.3), 0 6px 14px rgba(79, 70, 229, 0.22); }
-.btn.primary:hover:not(:disabled) { filter: brightness(1.06); box-shadow: 0 1px 2px rgba(79, 70, 229, 0.3), 0 10px 22px rgba(79, 70, 229, 0.3); }
+.btn.primary { color: #fff; border-color: transparent; background: var(--app-gradient); box-shadow: 0 1px 2px rgba(37, 99, 235, 0.3), 0 6px 14px rgba(37, 99, 235, 0.22); }
+.btn.primary:hover:not(:disabled) { filter: brightness(1.06); box-shadow: 0 1px 2px rgba(37, 99, 235, 0.3), 0 10px 22px rgba(37, 99, 235, 0.3); }
 .btn.danger { color: var(--app-red); }
 .btn.danger:hover:not(:disabled) { border-color: var(--app-red); background: var(--app-red-soft); }
 .btn:disabled, .select:disabled, .date:disabled, .title-input:disabled, .textarea:disabled, .input:disabled { opacity: 0.55; cursor: not-allowed; }
