@@ -1,10 +1,16 @@
+import { Link } from "react-router";
+import "./error.css";
+
 const ErrorPage = () => {
   return (
-    <div>
-      <h1>404</h1>
-      <h2>Page Not Found</h2>
-      <p>The page you're looking for doesn't exist.</p>
-    </div>
+    <main className="notfound">
+      <span className="notfound-code" aria-hidden="true">404</span>
+      <h1>Page not found</h1>
+      <p>The page you're looking for doesn't exist or has been moved.</p>
+      <Link className="notfound-link" to="/home">
+        Back to your workspace
+      </Link>
+    </main>
   );
 };
 

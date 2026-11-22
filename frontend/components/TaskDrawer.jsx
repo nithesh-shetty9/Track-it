@@ -124,7 +124,7 @@ const TaskBody = ({ id, onClose }) => {
       <section className="progress-editor">
         <div className="row between"><strong>Progress</strong><span>{task.progress || 0}%</span></div>
         <input type="range" min="0" max="100" step="1" value={task.progress || 0} disabled={locked || !canUpdateProgress} aria-label="Task progress" onChange={(event) => save({ progress: Number(event.target.value) })} />
-        <Progress value={task.progress || 0} color="var(--app-green)" />
+        <Progress value={task.progress || 0} color="var(--app-accent)" />
       </section>
       {task.project && <section className="progress-notes"><strong>Progress notes</strong>{task.progressNotes?.length ? task.progressNotes.map((note) => <article className="note" key={note._id || note.createdAt}><div className="row between"><span className="row"><Avatar name={note.author?.name} size={22} /> {note.author?.name || "Teammate"}</span><time className="muted small">{fmtDateTime(note.createdAt)}</time></div><p>{note.content}</p></article>) : <p className="muted small">No progress notes yet.</p>}<textarea className="textarea" rows={2} placeholder={canUpdateProgress ? "Add a progress note and press Enter…" : "Only the assignee can add progress notes"} disabled={locked || !canUpdateProgress} onKeyDown={addNote} /></section>}
       <div className="row end">
