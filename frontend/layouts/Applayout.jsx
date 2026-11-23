@@ -13,6 +13,7 @@ import { loadProjects, loadUnread } from "../store/features/workspace";
 import { openOverlay, setTheme } from "../store/features/ui";
 import "../src/App.css";
 import "../components/ui.css";
+import "../src/redesign.css";
 
 const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 const subscribe = (callback) => {
