@@ -260,16 +260,16 @@ const Landingpage = () => {
 
           <div className="hero-social">
             <div className="avatars">
-              <span className="avatar" style={{ background: "#3b82f6" }}>
+              <span className="avatar avatar-blue">
                 AL
               </span>
-              <span className="avatar" style={{ background: "#10b981" }}>
+              <span className="avatar avatar-yellow">
                 NK
               </span>
-              <span className="avatar" style={{ background: "#0ea5e9" }}>
+              <span className="avatar avatar-purple">
                 SR
               </span>
-              <span className="avatar" style={{ background: "#f59e0b" }}>
+              <span className="avatar avatar-coral">
                 TA
               </span>
             </div>
@@ -360,6 +360,15 @@ const Landingpage = () => {
                         key={task.id}
                         className={`preview-task-item ${task.completed ? "is-completed" : ""}`}
                         onClick={() => togglePreviewTask(task.id)}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            togglePreviewTask(task.id);
+                          }
+                        }}
+                        role="button"
+                        tabIndex={0}
+                        aria-pressed={task.completed}
                       >
                         <span
                           className={`check-box-icon ${task.completed ? "checked" : "unchecked"}`}
@@ -613,6 +622,15 @@ const Landingpage = () => {
                   key={t.id}
                   className={`showcase-task-row ${t.completed ? "done-row" : ""}`}
                   onClick={() => toggleShowcaseTask(t.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      toggleShowcaseTask(t.id);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={t.completed}
                 >
                   <span
                     className={`check-box-icon ${t.completed ? "checked" : "unchecked"}`}
@@ -633,10 +651,7 @@ const Landingpage = () => {
             <ul className="showcase-members-list">
               <li className="member-item">
                 <div className="member-info">
-                  <div
-                    className="member-avatar"
-                    style={{ background: "#2563eb" }}
-                  >
+                  <div className="member-avatar avatar-blue">
                     NK
                   </div>
                   <div>
@@ -648,10 +663,7 @@ const Landingpage = () => {
               </li>
               <li className="member-item">
                 <div className="member-info">
-                  <div
-                    className="member-avatar"
-                    style={{ background: "#16a34a" }}
-                  >
+                  <div className="member-avatar avatar-yellow">
                     AL
                   </div>
                   <div>
@@ -663,10 +675,7 @@ const Landingpage = () => {
               </li>
               <li className="member-item">
                 <div className="member-info">
-                  <div
-                    className="member-avatar"
-                    style={{ background: "#0891b2" }}
-                  >
+                  <div className="member-avatar avatar-purple">
                     SR
                   </div>
                   <div>
